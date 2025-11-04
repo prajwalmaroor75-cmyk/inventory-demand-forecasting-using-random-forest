@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inventory Demand Forecast</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-light text-center p-4">
+  <div class="container">
+
+    <!-- Top R² Display -->
+    <div class="alert alert-info shadow-sm mb-4" id="accuracyBox">
+      🔍 <strong>Model Accuracy (R²):</strong> <span id="accuracyVal">Loading...</span>%
+    </div>
+
+    <h2 class="mb-4">📦 Inventory Demand Forecast</h2>
+
+    <!-- Input Form -->
+    <div class="card p-4 shadow mb-4">
+      <form id="predictForm">
+        <div class="row mb-3 text-start align-items-center">
+          <label class="col-sm-3 col-form-label">Store ID:</label>
+          <div class="col-sm-9"><input type="number" class="form-control" id="store_id" required /></div>
+        </div>
+        <div class="row mb-3 text-start align-items-center">
+          <label class="col-sm-3 col-form-label">SKU ID:</label>
+          <div class="col-sm-9"><input type="number" class="form-control" id="sku_id" required /></div>
+        </div>
+        <div class="row mb-3 text-start align-items-center">
+          <label class="col-sm-3 col-form-label">Total Price:</label>
+          <div class="col-sm-9"><input type="number" class="form-control" id="total_price" required /></div>
+        </div>
+        <div class="row mb-3 text-start align-items-center">
+          <label class="col-sm-3 col-form-label">Base Price:</label>
+          <div class="col-sm-9"><input type="number" class="form-control" id="base_price" required /></div>
+        </div>
+        <div class="row mb-3 text-start align-items-center">
+          <label class="col-sm-3 col-form-label">Featured SKU (0/1):</label>
+          <div class="col-sm-9"><input type="number" class="form-control" id="is_featured_sku" required /></div>
+        </div>
+        <div class="row mb-4 text-start align-items-center">
+          <label class="col-sm-3 col-form-label">Display SKU (0/1):</label>
+          <div class="col-sm-9"><input type="number" class="form-control" id="is_display_sku" required /></div>
+        </div>
+        <div class="d-grid">
+          <button class="btn btn-primary btn-lg" type="submit">Generate Prediction</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Result Box -->
+    <div id="resultCard" class="card shadow p-4 mb-4 d-none text-start">
+      <h4 class="mb-3 text-center">📊 Prediction Result</h4>
+      <p><strong>Predicted Units:</strong> <span id="units"></span></p>
+      <p><strong>Predicted Demand:</strong> <span id="percentage"></span>%</p>
+      <p><strong>Is Demand High?</strong> <span id="demandHigh"></span></p>
+      <p class="text-muted"><strong>Model Accuracy:</strong> <span id="r2Display">--</span>%</p>
+    </div>
+
+    <!-- Chart -->
+    <div class="card shadow p-4">
+      <h5 class="mb-3 text-start">📈 Demand Prediction History</h5>
+      <canvas id="demandChart" height="100"></canvas>
+    </div>
+
+  </div>
+
+  <!-- Script -->
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
+
+
